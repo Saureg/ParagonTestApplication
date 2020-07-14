@@ -7,27 +7,27 @@ namespace ParagonTestApplication.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateIndex(
-                name: "IX_Series_Name",
-                table: "Series",
-                column: "Name",
+                "IX_Series_Name",
+                "Series",
+                "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Webinar_Name",
-                table: "Webinar",
-                column: "Name",
+                "IX_Webinar_Name",
+                "Webinar",
+                "Name",
                 unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(
-                name: "IX_Series_Name",
-                table: "Series");
+                "IX_Series_Name",
+                "Series");
 
             migrationBuilder.DropIndex(
-                name: "IX_Webinar_Name",
-                table: "Webinar");
+                "IX_Webinar_Name",
+                "Webinar");
         }
     }
 }

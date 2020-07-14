@@ -4,23 +4,13 @@ namespace ParagonTestApplication.Models.ApiModels.Common
 {
     public class Response<T>
     {
-        public Response()
-        {
-        }
-        
-        public Response(T data)
-        {
-            Message = string.Empty;
-            Data = data;
-        }
-        
-        public Response(T data, HttpStatusCode statusCode, string message)
+        public Response(HttpStatusCode statusCode, T data, string message = null)
         {
             StatusCode = statusCode;
             Message = message ?? "Success";
             Data = data;
         }
-        
+
         public T Data { get; set; }
         public HttpStatusCode StatusCode { get; set; }
         public string Message { get; set; }

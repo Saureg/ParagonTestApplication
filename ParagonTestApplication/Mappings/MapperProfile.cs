@@ -11,7 +11,7 @@ namespace ParagonTestApplication.Mappings
         public MapperProfile()
         {
             CreateMap<Series, SeriesDto>();
-            CreateMap<SeriesDto, Series >();
+            CreateMap<SeriesDto, Series>();
             CreateMap<Webinar, WebinarDto>();
             CreateMap<PagedList<Webinar>, PagedList<WebinarDto>>();
             CreateMap<SeriesDto, Series>();

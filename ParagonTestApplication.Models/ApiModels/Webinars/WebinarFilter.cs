@@ -1,8 +1,4 @@
-﻿using System;
-using ParagonTestApplication.Models.ApiModels.Common;
-using ParagonTestApplication.Models.Common;
-
-namespace ParagonTestApplication.Models.ApiModels.Webinars
+﻿namespace ParagonTestApplication.Models.ApiModels.Webinars
 {
     public class WebinarFilter
     {

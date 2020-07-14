@@ -8,6 +8,6 @@ namespace ParagonTestApplication.Models.DataModels
         public DateTime? MaxDateTime { get; set; }
         public int? MinDuration { get; set; }
         public int? MaxDuration { get; set; }
-        public int? SeriesId { get; set; } 
+        public int? SeriesId { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace ParagonTestApplication.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "IsDeleted",
-                table: "Series",
+                "IsDeleted",
+                "Series",
                 nullable: false,
                 defaultValue: false);
         }
@@ -16,8 +16,8 @@ namespace ParagonTestApplication.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsDeleted",
-                table: "Series");
+                "IsDeleted",
+                "Series");
         }
     }
 }

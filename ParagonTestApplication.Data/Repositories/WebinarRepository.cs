@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -23,36 +22,24 @@ namespace ParagonTestApplication.Data.Repositories
             return await _dbContext.Webinars.Include(x => x.Series).ToListAsync();
         }
 
-        public async Task<PagedList<Webinar>> GetFilteredList(WebinarParameters webinarFilter, PaginationFilter paginationFilter)
+        public async Task<PagedList<Webinar>> GetFilteredList(WebinarParameters webinarFilter,
+            PaginationFilter paginationFilter)
         {
-            var queryable = _dbContext.Webinars.Include(x=>x.Series).AsQueryable();
+            var queryable = _dbContext.Webinars.Include(x => x.Series).AsQueryable();
 
             if (webinarFilter.MinDateTime != null)
-            {
                 queryable = queryable.Where(x =>
                     x.StartDateTime <= webinarFilter.MaxDateTime.Value);
-            }
             if (webinarFilter.MaxDateTime != null)
-            {
                 queryable = queryable.Where(x => x.EndDateTime >= webinarFilter.MinDateTime.Value);
-            }
             if (webinarFilter.MinDuration != null)
-            {
                 queryable = queryable.Where(x => x.Duration <= webinarFilter.MaxDuration.Value);
-            }
             if (webinarFilter.MaxDuration != null)
-            {
                 queryable = queryable.Where(x => x.Duration >= webinarFilter.MinDuration.Value);
-            }
-            if (webinarFilter.SeriesId != null)
-            {
-                queryable = queryable.Where(x => x.SeriesId == webinarFilter.SeriesId);
-            }
-            
-            //var webinars = await _dbContext.Webinars
-                //.Include(x => x.Series)
-                var webinars = await queryable
-                .OrderByDescending(x =>x.StartDateTime)
+            if (webinarFilter.SeriesId != null) queryable = queryable.Where(x => x.SeriesId == webinarFilter.SeriesId);
+
+            var webinars = await queryable
+                .OrderByDescending(x => x.StartDateTime)
                 .Skip((paginationFilter.PageNumber - 1) * paginationFilter.PageSize)
                 .Take(paginationFilter.PageSize)
                 .ToListAsync();
@@ -70,7 +57,7 @@ namespace ParagonTestApplication.Data.Repositories
         public async Task<Webinar> Update(int id, Webinar webinar)
         {
             webinar.Series = await CreateSeriesIfNonExist(webinar.Series.Name);
-            
+
             var currentWebinar = Get(id).Result;
 
             currentWebinar.Name = webinar.Name;
@@ -78,12 +65,12 @@ namespace ParagonTestApplication.Data.Repositories
             currentWebinar.Duration = webinar.Duration;
             currentWebinar.Series = webinar.Series;
             currentWebinar.CalculateEndDateTime();
-            
-             var updatedWebinar = _dbContext.Webinars.Attach(currentWebinar);
-             _dbContext.Entry(currentWebinar).State = EntityState.Modified;
-            
+
+            var updatedWebinar = _dbContext.Webinars.Attach(currentWebinar);
+            _dbContext.Entry(currentWebinar).State = EntityState.Modified;
+
             await _dbContext.SaveChangesAsync();
-            
+
             return updatedWebinar.Entity;
         }
 
@@ -92,7 +79,7 @@ namespace ParagonTestApplication.Data.Repositories
             webinar.Series = await CreateSeriesIfNonExist(seriesName);
 
             webinar.CalculateEndDateTime();
-            
+
             var createdWebinar = await _dbContext.Webinars.AddAsync(webinar);
             await _dbContext.SaveChangesAsync();
             return createdWebinar.Entity;
@@ -102,10 +89,7 @@ namespace ParagonTestApplication.Data.Repositories
         {
             var webinar = await Get(id);
 
-            if (webinar == null)
-            {
-                return null;
-            }
+            if (webinar == null) return null;
 
             _dbContext.Webinars.Remove(webinar);
 
@@ -119,7 +103,7 @@ namespace ParagonTestApplication.Data.Repositories
                 .FirstOrDefaultAsync(x => x.Name == seriesName);
 
             if (currentSeries != null) return currentSeries;
-            
+
             var series = await _dbContext.Series.AddAsync(new Series
             {
                 Name = seriesName

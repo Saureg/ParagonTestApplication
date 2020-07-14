@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using FluentValidation;
 using ParagonTestApplication.Models.ApiModels.Webinars;
@@ -12,7 +11,7 @@ namespace ParagonTestApplication.Models.Validators
     {
         private readonly IEnumerable<Webinar> _webinars;
         private readonly int? _id;
-        
+
         public CreateOrUpdateWebinarRequestValidator(IEnumerable<Webinar> webinars, int? id = null)
         {
             _webinars = webinars;
@@ -22,7 +21,7 @@ namespace ParagonTestApplication.Models.Validators
                 .NotNull().WithMessage("Name is required")
                 .Length(1, 50).WithMessage("Name has to be between 1 and 50 characters long")
                 .Must(IsNameUnique).WithMessage("Name must be unique");
-            
+
             RuleFor(x => x.Series)
                 .NotNull().WithMessage("Series is required");
 
@@ -43,11 +42,9 @@ namespace ParagonTestApplication.Models.Validators
 
         private bool IsNameUnique(string newValue)
         {
-            var webinar = _webinars.SingleOrDefault(x => string.Equals(x.Name, newValue, StringComparison.CurrentCultureIgnoreCase));
-            if (webinar == null)
-            {
-                return true;
-            }
+            var webinar = _webinars.SingleOrDefault(x =>
+                string.Equals(x.Name, newValue, StringComparison.CurrentCultureIgnoreCase));
+            if (webinar == null) return true;
             return webinar.Id == _id;
         }
     }
