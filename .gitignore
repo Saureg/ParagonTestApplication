@@ -12,5 +12,6 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 /.idea
-/ParagonTestApplication/bin
-/ParagonTestApplication/obj
+*/bin
+*/obj
+/ParagonTestApplication.sln.DotSettings.user
