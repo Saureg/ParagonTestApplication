@@ -13,7 +13,7 @@ namespace ParagonTestApplication.Data
 
         public DbSet<Webinar> Webinars { get; set; }
         public DbSet<Series> Series { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Webinar>().ToTable("Webinar").HasKey(x => x.Id);
@@ -22,22 +22,23 @@ namespace ParagonTestApplication.Data
             modelBuilder.Entity<Webinar>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
-            
+
             modelBuilder.Entity<Series>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
-            
+
             modelBuilder.Entity<Webinar>()
                 .HasQueryFilter(post => EF.Property<bool>(post, "IsDeleted") == false);
         }
-        
+
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             OnBeforeSaving();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default)
         {
             OnBeforeSaving();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
@@ -46,7 +47,6 @@ namespace ParagonTestApplication.Data
         private void OnBeforeSaving()
         {
             foreach (var entry in ChangeTracker.Entries())
-            {
                 switch (entry.State)
                 {
                     case EntityState.Added:
@@ -58,7 +58,6 @@ namespace ParagonTestApplication.Data
                         entry.CurrentValues["IsDeleted"] = true;
                         break;
                 }
-            }
         }
     }
 }
