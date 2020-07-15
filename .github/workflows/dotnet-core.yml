@@ -2,7 +2,9 @@ name: .NET Core
 
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - master 
+      - 'ApiTests'
 
 jobs:
   build:
@@ -19,5 +21,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+    - name: UnitTest
+      run: dotnet test ./ParagonTestApplication.UnitTests/ParagonTestApplication.UnitTests.csproj --no-restore --verbosity normal 
+    - name: ApiTest
+      run: dotnet test ./ParagonTestApplication.ApiTests/ParagonTestApplication.ApiTests.csproj --no-restore --verbosity normal 
