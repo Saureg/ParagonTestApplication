@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParagonTestApplication.Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParagonTestApplication.Models", "ParagonTestApplication.Models\ParagonTestApplication.Models.csproj", "{88A6572B-0365-459F-858E-39BCB5747FB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParagonTestApplication.UnitTests", "ParagonTestApplication.UnitTests\ParagonTestApplication.UnitTests.csproj", "{6CF06ACD-FAE6-4209-A640-457D5BA3A916}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,10 +30,15 @@ Global
 		{88A6572B-0365-459F-858E-39BCB5747FB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88A6572B-0365-459F-858E-39BCB5747FB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88A6572B-0365-459F-858E-39BCB5747FB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CF06ACD-FAE6-4209-A640-457D5BA3A916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CF06ACD-FAE6-4209-A640-457D5BA3A916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CF06ACD-FAE6-4209-A640-457D5BA3A916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CF06ACD-FAE6-4209-A640-457D5BA3A916}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D5383AD1-3F61-44A3-A6D2-F6EF2F8396D5} = {B6257614-A86B-4107-8150-ECE6DE62DCE3}
 		{25F1958E-55AD-42CE-89A1-E735B4AB1140} = {B6257614-A86B-4107-8150-ECE6DE62DCE3}
 		{88A6572B-0365-459F-858E-39BCB5747FB5} = {B6257614-A86B-4107-8150-ECE6DE62DCE3}
+		{6CF06ACD-FAE6-4209-A640-457D5BA3A916} = {0EC3DB7A-3A58-4BC5-BCBC-58C3D7C3FD17}
 	EndGlobalSection
 EndGlobal
