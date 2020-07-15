@@ -36,8 +36,8 @@ namespace ParagonTestApplication.Models.Validators
 
             RuleFor(x => x.Duration)
                 .NotNull().WithMessage("Duration is required")
-                .GreaterThan(1).WithMessage("Duration must be equal or greater than 1 minute")
-                .LessThan(24 * 60).WithMessage("Duration must be less than 24 hours");
+                .GreaterThanOrEqualTo(1).WithMessage("Duration must be equal or greater than 1 minute")
+                .LessThanOrEqualTo(24 * 60).WithMessage("Duration must be less than 24 hours");
         }
 
         private bool IsNameUnique(string newValue)
