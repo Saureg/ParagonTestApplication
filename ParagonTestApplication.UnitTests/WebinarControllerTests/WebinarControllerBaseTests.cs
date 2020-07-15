@@ -7,8 +7,8 @@ using ParagonTestApplication.Models.DataModels;
 
 namespace ParagonTestApplication.UnitTests.WebinarControllerTests
 {
-    [Category("WebinarController")]
-    public class WebinarControllerBaseTests
+    [Category("Unit.WebinarController")]
+    public abstract class WebinarControllerBaseTests
     {
         protected readonly IMapper MockMapper;
         protected readonly List<Webinar> TestWebinars;
