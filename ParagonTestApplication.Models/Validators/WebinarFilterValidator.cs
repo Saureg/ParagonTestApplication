@@ -16,15 +16,15 @@ namespace ParagonTestApplication.Models.Validators
                 .When(x => x.MaxDateTime != null);
 
             RuleFor(x => x.MinDuration)
-                .Must(BeAValidInt).WithMessage("MinDuration must be a valid number")
+                .Must(BeAValidPositiveInt).WithMessage("MinDuration must be a positive valid integer")
                 .When(x => x.MinDuration != null);
 
             RuleFor(x => x.MaxDuration)
-                .Must(BeAValidInt).WithMessage("MaxDuration must be a valid number")
+                .Must(BeAValidPositiveInt).WithMessage("MaxDuration must be a positive valid integer")
                 .When(x => x.MaxDuration != null);
 
             RuleFor(x => x.SeriesId)
-                .Must(BeAValidInt).WithMessage("SeriesId must be a valid number")
+                .Must(BeAValidPositiveInt).WithMessage("SeriesId must be a positive valid integer")
                 .When(x => x.SeriesId != null);
         }
     }

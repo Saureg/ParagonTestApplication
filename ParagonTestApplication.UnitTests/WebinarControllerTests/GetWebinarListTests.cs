@@ -110,9 +110,9 @@ namespace ParagonTestApplication.UnitTests.WebinarControllerTests
                 () => model.Message.ShouldContain("PageSize must be equal or greater than 1"),
                 () => model.Message.ShouldContain("MinDateTime must be in format 2010-01-11T11:41"),
                 () => model.Message.ShouldContain("MaxDateTime must be in format 2010-01-11T11:41"),
-                () => model.Message.ShouldContain("MinDuration must be a valid number"),
-                () => model.Message.ShouldContain("MaxDuration must be a valid number"),
-                () => model.Message.ShouldContain("SeriesId must be a valid number")
+                () => model.Message.ShouldContain("MinDuration must be a positive valid integer"),
+                () => model.Message.ShouldContain("MaxDuration must be a positive valid integer"),
+                () => model.Message.ShouldContain("SeriesId must be a positive valid integer")
             );
         }
     }

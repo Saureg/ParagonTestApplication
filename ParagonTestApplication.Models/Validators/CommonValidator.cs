@@ -12,9 +12,10 @@ namespace ParagonTestApplication.Models.Validators
                 out _);
         }
 
-        protected bool BeAValidInt(string value)
+        protected bool BeAValidPositiveInt(string value)
         {
-            return int.TryParse(value, out _);
+            if (int.TryParse(value, out var number)) return number > 0;
+            return false;
         }
     }
 }

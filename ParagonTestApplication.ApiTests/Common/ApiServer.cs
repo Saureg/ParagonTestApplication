@@ -9,31 +9,29 @@ namespace ParagonTestApplication.ApiTests.Common
 {
     public class ApiServer : IDisposable
     {
-        private IConfigurationRoot _config;
-
-        public ApiServer()
+        private ApiServer()
         {
-            _config = new ConfigurationBuilder()
+            new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-
+            
             Server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             Client = Server.CreateClient();
         }
 
         public HttpClient Client { get; private set; }
 
-        public TestServer Server { get; private set; }
+        private TestServer Server { get; set; }
 
         private static ApiServer _apiServer;
 
-        private static readonly object _lock = new object();
+        private static readonly object Lock = new object();
 
         public static ApiServer GetInstance()
         {
             if (_apiServer != null) return _apiServer;
-            lock (_lock)
+            lock (Lock)
             {
                 _apiServer ??= new ApiServer();
             }
@@ -49,11 +47,9 @@ namespace ParagonTestApplication.ApiTests.Common
                 Client = null;
             }
 
-            if (Server != null)
-            {
-                Server.Dispose();
-                Server = null;
-            }
+            if (Server == null) return;
+            Server.Dispose();
+            Server = null;
         }
     }
 }

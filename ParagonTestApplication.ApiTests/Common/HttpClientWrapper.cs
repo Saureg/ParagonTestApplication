@@ -1,5 +1,8 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Newtonsoft.Json;
 using ParagonTestApplication.ApiTests.Helpers;
 
@@ -14,54 +17,50 @@ namespace ParagonTestApplication.ApiTests.Common
 
         public HttpClient Client { get; }
 
-        public async Task<T> GetAsync<T>(string url)
+        public async Task<T> GetAsync<T>(string url, Dictionary<string, string> queryDictionary = null)
         {
+            if (queryDictionary != null)
+            {
+                var uriBuilder = new UriBuilder(url);
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                foreach (var (key, value) in queryDictionary) query[key] = value;
+
+                uriBuilder.Query = query.ToString()!;
+                url = uriBuilder.ToString();
+            }
+
             var response = await Client.GetAsync(url);
 
             var responseText = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<T>(responseText);
             return data;
-        }
-
-        public async Task GetAsync(string url)
-        {
-            var response = await Client.GetAsync(url);
         }
 
         public async Task<T> PostAsync<T>(string url, object body)
         {
             var response = await Client.PostAsync(url, new JsonContent(body));
 
-            response.EnsureSuccessStatusCode();
-
             var responseText = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<T>(responseText);
             return data;
-        }
-
-        public async Task PostAsync(string url, object body)
-        {
-            var response = await Client.PostAsync(url, new JsonContent(body));
-
-            response.EnsureSuccessStatusCode();
         }
 
         public async Task<T> PutAsync<T>(string url, object body)
         {
             var response = await Client.PutAsync(url, new JsonContent(body));
 
-            response.EnsureSuccessStatusCode();
-
-            var respnoseText = await response.Content.ReadAsStringAsync();
-            var data = JsonConvert.DeserializeObject<T>(respnoseText);
+            var responseText = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<T>(responseText);
             return data;
         }
 
-        public async Task DeleteAsync(string url)
+        public async Task<T> DeleteAsync<T>(string url)
         {
             var response = await Client.DeleteAsync(url);
 
-            response.EnsureSuccessStatusCode();
+            var responseText = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<T>(responseText);
+            return data;
         }
     }
 }

@@ -83,7 +83,6 @@ namespace ParagonTestApplication.UnitTests.WebinarControllerTests
                 () => model.Message.ShouldContain("Name is required"),
                 () => model.Message.ShouldContain("Series is required"),
                 () => model.Message.ShouldContain("StartDateTime is required"),
-                () => model.Message.ShouldContain("StartDateTime must be in format 2010-01-11T11:41"),
                 () => model.Message.ShouldContain("Duration must be equal or greater than 1 minute")
             );
         }

@@ -31,11 +31,13 @@ namespace ParagonTestApplication.Models.Validators
                 .When(x => x.Series != null);
 
             RuleFor(x => x.StartDateTime)
-                .NotEmpty().WithMessage("StartDateTime is required")
-                .Must(BeAValidDate).WithMessage("StartDateTime must be in format 2010-01-11T11:41");
+                .NotEmpty().WithMessage("StartDateTime is required");
+
+            RuleFor(x => x.StartDateTime)
+                .Must(BeAValidDate).WithMessage("StartDateTime must be in format 2010-01-11T11:41")
+                .When(x => x.StartDateTime != null);
 
             RuleFor(x => x.Duration)
-                .NotNull().WithMessage("Duration is required")
                 .GreaterThanOrEqualTo(1).WithMessage("Duration must be equal or greater than 1 minute")
                 .LessThanOrEqualTo(24 * 60).WithMessage("Duration must be less than 24 hours");
         }

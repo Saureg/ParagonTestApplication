@@ -3,29 +3,18 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using ParagonTestApplication.ApiTests.Common;
-using ParagonTestApplication.ApiTests.Helpers;
 using ParagonTestApplication.Models.ApiModels.Series;
 using ParagonTestApplication.Models.ApiModels.Webinars;
 using Shouldly;
 
-namespace ParagonTestApplication.ApiTests.Webinars
+namespace ParagonTestApplication.ApiTests.Tests.Webinars
 {
-    public class GetTests
+    public class GetWebinarTests : BaseWebinarsTests
     {
-        private readonly WebinarHelper _helper;
-
-        public GetTests()
-        {
-            var apiServer = ApiServer.GetInstance();
-            var client = new HttpClientWrapper(apiServer.Client);
-            _helper = new WebinarHelper(client);
-        }
-
         private WebinarDto _webinar;
 
         [OneTimeSetUp]
-        public async Task PrepareTests()
+        public async Task PrepareTestData()
         {
             var createdOrUpdateWebinar = new CreateOrUpdateWebinarRequest
             {
@@ -38,21 +27,15 @@ namespace ParagonTestApplication.ApiTests.Webinars
                 }
             };
 
-            var result = await _helper.CreateWebinar(createdOrUpdateWebinar);
+            var result = await WebinarApiHelper.CreateWebinar(createdOrUpdateWebinar);
 
             _webinar = result.Data;
-        }
-
-        [OneTimeTearDown]
-        public async Task TearDown()
-        {
-            await _helper.DeleteWebinar(_webinar.Id);
         }
 
         [Test]
         public async Task GetWebinarTest()
         {
-            var response = await _helper.GetWebinar(_webinar.Id);
+            var response = await WebinarApiHelper.GetWebinar(_webinar.Id);
 
             response.ShouldSatisfyAllConditions(
                 () => response.StatusCode.ShouldBe(HttpStatusCode.OK),
@@ -71,7 +54,7 @@ namespace ParagonTestApplication.ApiTests.Webinars
         public async Task GetWebinarWithUnknownIdTest()
         {
             const int testWebinarId = 0;
-            var response = await _helper.GetWebinar(testWebinarId);
+            var response = await WebinarApiHelper.GetWebinar(testWebinarId);
 
             response.ShouldSatisfyAllConditions(
                 () => response.StatusCode.ShouldBe(HttpStatusCode.NotFound),
@@ -84,7 +67,7 @@ namespace ParagonTestApplication.ApiTests.Webinars
         public async Task GetWebinarWithInvalidIdTest()
         {
             const string invalidWebinarId = "test";
-            var response = await _helper.GetWebinarWithBadRequestResponse(invalidWebinarId);
+            var response = await WebinarApiHelper.GetWebinarWithInvalidData(invalidWebinarId);
 
             response.ShouldSatisfyAllConditions
             (
