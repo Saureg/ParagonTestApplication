@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using ParagonTestApplication.Data.Contracts;
 using ParagonTestApplication.Models.ApiModels.Common;
 using ParagonTestApplication.Models.ApiModels.Webinars;
