@@ -1,5 +1,8 @@
 ﻿using System.Net;
 
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+
 namespace ParagonTestApplication.Models.ApiModels.Common
 {
     public class Response<T>

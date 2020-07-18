@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ParagonTestApplication.Models.DataModels;
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 namespace ParagonTestApplication.Data
 {
     public class MainDbContext : DbContext

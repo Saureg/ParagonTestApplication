@@ -4,6 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ParagonTestApplication.Data.Migrations
 {
+    // ReSharper disable once UnusedType.Global
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

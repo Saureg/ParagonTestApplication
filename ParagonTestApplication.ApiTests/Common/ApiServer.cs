@@ -15,7 +15,7 @@ namespace ParagonTestApplication.ApiTests.Common
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            
+
             Server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             Client = Server.CreateClient();
         }

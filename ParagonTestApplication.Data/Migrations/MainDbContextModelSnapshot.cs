@@ -7,6 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ParagonTestApplication.Data.Migrations
 {
+    // ReSharper disable once UnusedType.Global
     [DbContext(typeof(MainDbContext))]
     internal class MainDbContextModelSnapshot : ModelSnapshot
     {

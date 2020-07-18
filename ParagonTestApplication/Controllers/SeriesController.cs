@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using ParagonTestApplication.Data.Contracts;
 using ParagonTestApplication.Models.ApiModels.Common;
 using ParagonTestApplication.Models.ApiModels.Series;
-using ParagonTestApplication.Models.ApiModels.Webinars;
-using ParagonTestApplication.Models.Common;
 
 namespace ParagonTestApplication.Controllers
 {
@@ -24,14 +22,18 @@ namespace ParagonTestApplication.Controllers
             _mapper = mapper;
             _allSeries = allSeries;
         }
-        
+
+        /// <summary>
+        ///     Get all webinar's series
+        /// </summary>
+        /// <returns>Webinar's series</returns>
         [HttpGet]
         [ProducesResponseType(typeof(Response<IEnumerable<SeriesDto>>), StatusCodes.Status200OK)]
         public async Task<ActionResult<Response<IEnumerable<SeriesDto>>>> GetSeriesList()
         {
             var series = await _allSeries.GetAll();
             var seriesResult = _mapper.Map<IEnumerable<SeriesDto>>(series);
-            
+
             return Ok(new Response<IEnumerable<SeriesDto>>(HttpStatusCode.OK, seriesResult));
         }
     }

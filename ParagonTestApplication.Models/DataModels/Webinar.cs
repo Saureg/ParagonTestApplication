@@ -2,6 +2,7 @@
 
 namespace ParagonTestApplication.Models.DataModels
 {
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class Webinar
     {
         public int Id { get; set; }

@@ -26,6 +26,14 @@ namespace ParagonTestApplication.Controllers
             _allWebinars = allWebinars;
         }
 
+        /// <summary>
+        ///     Get a list of webinars
+        /// </summary>
+        /// <param name="webinarFilter">Webinar filtering options</param>
+        /// <param name="paginationFilter">Pagination options</param>
+        /// <returns>List of webinars</returns>
+        /// <response code="200">Returns filtered items</response>
+        /// <response code="400">If filters is invalid</response>
         [HttpGet]
         [ProducesResponseType(typeof(Response<PagedList<WebinarDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response<>), StatusCodes.Status400BadRequest)]
@@ -49,6 +57,13 @@ namespace ParagonTestApplication.Controllers
             return Ok(new Response<PagedList<WebinarDto>>(HttpStatusCode.OK, webinarResult));
         }
 
+        /// <summary>
+        ///     Get a specific webinar
+        /// </summary>
+        /// <param name="id">Webinar id</param>
+        /// <returns>Webinar</returns>
+        /// <response code="200">Returns webinar</response>
+        /// <response code="404">Webinar not found</response>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Response<WebinarDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response<>), StatusCodes.Status404NotFound)]
@@ -65,10 +80,12 @@ namespace ParagonTestApplication.Controllers
         }
 
         /// <summary>
-        ///     Create new webinar
+        ///     Create a new webinar
         /// </summary>
-        /// <param name="createOrUpdateWebinarRequest">Request model for new webinar</param>
-        /// <returns>ActionResult</returns>
+        /// <param name="createOrUpdateWebinarRequest">Parameters for creating a new webinar</param>
+        /// <returns>New webinar</returns>
+        /// <response code="201">Returns a newly created webinar</response>
+        /// <response code="400">If parameters is invalid</response>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Response<WebinarDto>), StatusCodes.Status201Created)]
@@ -93,6 +110,15 @@ namespace ParagonTestApplication.Controllers
             );
         }
 
+        /// <summary>
+        ///     Update a specific webinar
+        /// </summary>
+        /// <param name="id">Webinar id</param>
+        /// <param name="createOrUpdateWebinarRequest">Parameters for updating a specific webinar</param>
+        /// <returns>Updated webinar</returns>
+        /// <response code="201">Returns a updated webinar</response>
+        /// <response code="400">If parameters is invalid</response>
+        /// <response code="404">Webinar not found</response>
         [HttpPut("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Response<WebinarDto>), StatusCodes.Status201Created)]
@@ -123,6 +149,12 @@ namespace ParagonTestApplication.Controllers
             );
         }
 
+        /// <summary>
+        ///     Delete a specific webinar
+        /// </summary>
+        /// <param name="id">Webinar id</param>
+        /// <response code="204">Webinar deleted</response>
+        /// <response code="404">Webinar not found</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Response<>), StatusCodes.Status404NotFound)]

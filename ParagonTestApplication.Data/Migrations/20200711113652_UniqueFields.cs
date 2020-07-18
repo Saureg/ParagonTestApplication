@@ -2,6 +2,7 @@
 
 namespace ParagonTestApplication.Data.Migrations
 {
+    // ReSharper disable once UnusedType.Global
     public partial class UniqueFields : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
