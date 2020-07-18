@@ -14,9 +14,9 @@ services:
     volumes:
       - ./scripts/db_script.sql :/docker-entrypoint-initdb.d/db_script.sql
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=Edfhjd19
-      - POSTGRES_DB=ParagonTestApplicationDb
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db
     networks:
       - paragon-test-application-dev
 
