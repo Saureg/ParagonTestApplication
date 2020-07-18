@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace ParagonTestApplication.ApiTests.Models
+namespace ParagonTestApplication.ApiClient.Models
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public class ValidationErrorResponse

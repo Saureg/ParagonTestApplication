@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ParagonTestApplication.ApiTests.Common;
-using ParagonTestApplication.ApiTests.Models;
+using ParagonTestApplication.ApiClient.ClientWrapper;
+using ParagonTestApplication.ApiClient.Models;
 using ParagonTestApplication.Models.ApiModels.Common;
 using ParagonTestApplication.Models.ApiModels.Series;
 using ParagonTestApplication.Models.ApiModels.Webinars;
 using ParagonTestApplication.Models.Common;
 
-namespace ParagonTestApplication.ApiTests.Helpers
+namespace ParagonTestApplication.ApiClient.ApiHelpers
 {
     public class WebinarHelper
     {

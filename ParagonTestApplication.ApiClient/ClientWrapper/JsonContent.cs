@@ -2,7 +2,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace ParagonTestApplication.ApiTests.Helpers
+namespace ParagonTestApplication.ApiClient.ClientWrapper
 {
     public class JsonContent : StringContent
     {

@@ -1,6 +1,7 @@
 ﻿using System;
+using ParagonTestApplication.ApiClient.ApiHelpers;
+using ParagonTestApplication.ApiClient.ClientWrapper;
 using ParagonTestApplication.ApiTests.Common;
-using ParagonTestApplication.ApiTests.Helpers;
 
 namespace ParagonTestApplication.ApiTests.Tests.Webinars
 {

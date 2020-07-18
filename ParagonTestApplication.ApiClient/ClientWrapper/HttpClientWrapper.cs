@@ -4,9 +4,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
-using ParagonTestApplication.ApiTests.Helpers;
 
-namespace ParagonTestApplication.ApiTests.Common
+namespace ParagonTestApplication.ApiClient.ClientWrapper
 {
     public class HttpClientWrapper
     {
