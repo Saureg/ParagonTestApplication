@@ -1,0 +1,33 @@
+version: '3.4'
+
+networks:
+  paragon-test-application-dev:
+    driver: bridge
+
+services:
+  postgres:
+    container_name: 'postgres'
+    image: postgres:latest
+    ports:
+      - "5431:5432"
+    restart: always
+    volumes:
+      - ./scripts/db_script.sql :/docker-entrypoint-initdb.d/db_script.sql
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=Edfhjd19
+      - POSTGRES_DB=ParagonTestApplicationDb
+    networks:
+      - paragon-test-application-dev
+
+  paragon-test-application:
+    image: paragon-test-application:latest
+    depends_on:
+      - "postgres"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    networks:
+      - paragon-test-application-dev
