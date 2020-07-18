@@ -1,0 +1,18 @@
+﻿{
+  "Url": "https://localhost:5001",
+  "Duration": 10,
+  "MinPause": 3,
+  "MaxPause": 10,
+  "InjectionRates": [
+    {
+      "Name": "Actions",
+      "Pause": "20",
+      "ThreadCount": 10
+    },
+    {
+      "Name": "List",
+      "Pause": "10",
+      "ThreadCount": 40
+    }
+  ]
+}

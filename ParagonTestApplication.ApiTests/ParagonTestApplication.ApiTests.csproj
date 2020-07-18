@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ParagonTestApplication.ApiClient\ParagonTestApplication.ApiClient.csproj" />
       <ProjectReference Include="..\ParagonTestApplication\ParagonTestApplication.csproj" />
     </ItemGroup>
 

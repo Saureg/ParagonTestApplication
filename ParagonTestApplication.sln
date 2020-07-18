@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParagonTestApplication.Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParagonTestApplication.ApiTests", "ParagonTestApplication.ApiTests\ParagonTestApplication.ApiTests.csproj", "{5812C919-75E6-4FFE-9D98-8E5B0E27AE13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParagonTestApplication.PerformanceTests", "ParagonTestApplication.PerformanceTests\ParagonTestApplication.PerformanceTests.csproj", "{CF75CBED-9C9C-40B9-A936-B5EC103AC1EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParagonTestApplication.ApiClient", "ParagonTestApplication.ApiClient\ParagonTestApplication.ApiClient.csproj", "{D3B0244C-A354-495F-9F43-A79908CCA007}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,14 @@ Global
 		{5812C919-75E6-4FFE-9D98-8E5B0E27AE13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5812C919-75E6-4FFE-9D98-8E5B0E27AE13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5812C919-75E6-4FFE-9D98-8E5B0E27AE13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF75CBED-9C9C-40B9-A936-B5EC103AC1EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF75CBED-9C9C-40B9-A936-B5EC103AC1EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF75CBED-9C9C-40B9-A936-B5EC103AC1EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF75CBED-9C9C-40B9-A936-B5EC103AC1EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3B0244C-A354-495F-9F43-A79908CCA007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3B0244C-A354-495F-9F43-A79908CCA007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3B0244C-A354-495F-9F43-A79908CCA007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3B0244C-A354-495F-9F43-A79908CCA007}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D5383AD1-3F61-44A3-A6D2-F6EF2F8396D5} = {B6257614-A86B-4107-8150-ECE6DE62DCE3}
@@ -47,5 +59,7 @@ Global
 		{88A6572B-0365-459F-858E-39BCB5747FB5} = {B6257614-A86B-4107-8150-ECE6DE62DCE3}
 		{6CF06ACD-FAE6-4209-A640-457D5BA3A916} = {0EC3DB7A-3A58-4BC5-BCBC-58C3D7C3FD17}
 		{5812C919-75E6-4FFE-9D98-8E5B0E27AE13} = {0EC3DB7A-3A58-4BC5-BCBC-58C3D7C3FD17}
+		{CF75CBED-9C9C-40B9-A936-B5EC103AC1EC} = {0EC3DB7A-3A58-4BC5-BCBC-58C3D7C3FD17}
+		{D3B0244C-A354-495F-9F43-A79908CCA007} = {0EC3DB7A-3A58-4BC5-BCBC-58C3D7C3FD17}
 	EndGlobalSection
 EndGlobal
