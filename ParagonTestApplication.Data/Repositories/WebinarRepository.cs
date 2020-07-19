@@ -28,14 +28,13 @@ namespace ParagonTestApplication.Data.Repositories
             var queryable = _dbContext.Webinars.Include(x => x.Series).AsQueryable();
 
             if (webinarFilter.MinDateTime != null)
-                queryable = queryable.Where(x =>
-                    x.StartDateTime <= webinarFilter.MaxDateTime.Value);
-            if (webinarFilter.MaxDateTime != null)
                 queryable = queryable.Where(x => x.EndDateTime >= webinarFilter.MinDateTime.Value);
+            if (webinarFilter.MaxDateTime != null)
+                queryable = queryable.Where(x => x.StartDateTime <= webinarFilter.MaxDateTime.Value);
             if (webinarFilter.MinDuration != null)
-                queryable = queryable.Where(x => x.Duration <= webinarFilter.MaxDuration.Value);
-            if (webinarFilter.MaxDuration != null)
                 queryable = queryable.Where(x => x.Duration >= webinarFilter.MinDuration.Value);
+            if (webinarFilter.MaxDuration != null)
+                queryable = queryable.Where(x => x.Duration <= webinarFilter.MaxDuration.Value);
             if (webinarFilter.SeriesId != null) queryable = queryable.Where(x => x.SeriesId == webinarFilter.SeriesId);
 
             var webinars = await queryable
