@@ -1,1 +1,1 @@
-dotnet test ./ParagonTestApplication.ApiTests/ParagonTestApplication.ApiTests.csproj
+dotnet test ./../ParagonTestApplication.ApiTests/ParagonTestApplication.ApiTests.csproj

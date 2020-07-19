@@ -6,12 +6,12 @@
   "InjectionRates": [
     {
       "Name": "Actions",
-      "Pause": "20",
+      "Pause": 20,
       "ThreadCount": 10
     },
     {
       "Name": "List",
-      "Pause": "10",
+      "Pause": 10,
       "ThreadCount": 40
     }
   ]

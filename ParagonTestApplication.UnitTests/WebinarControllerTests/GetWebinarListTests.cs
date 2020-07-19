@@ -1,20 +1,27 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using NUnit.Framework;
-using ParagonTestApplication.Controllers;
-using ParagonTestApplication.Data.Contracts;
-using ParagonTestApplication.Models.ApiModels.Common;
-using ParagonTestApplication.Models.ApiModels.Webinars;
-using ParagonTestApplication.Models.Common;
-using ParagonTestApplication.Models.DataModels;
-using Shouldly;
-
-namespace ParagonTestApplication.UnitTests.WebinarControllerTests
+﻿namespace ParagonTestApplication.UnitTests.WebinarControllerTests
 {
+    using System.Net;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Moq;
+    using NUnit.Framework;
+    using ParagonTestApplication.Controllers;
+    using ParagonTestApplication.Data.Contracts;
+    using ParagonTestApplication.Models.ApiModels.Common;
+    using ParagonTestApplication.Models.ApiModels.Webinars;
+    using ParagonTestApplication.Models.Common;
+    using ParagonTestApplication.Models.DataModels;
+    using Shouldly;
+
+    /// <summary>
+    /// Get webinar list tests.
+    /// </summary>
     public class GetWebinarListTests : WebinarControllerBaseTests
     {
+        /// <summary>
+        /// Check get webinar list without params.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Test]
         public async Task GetWebinarList_WithoutParams_ReturnsOkResult()
         {
@@ -22,28 +29,33 @@ namespace ParagonTestApplication.UnitTests.WebinarControllerTests
             var mock = new Mock<IAllWebinars>();
             mock
                 .Setup(x => x.GetFilteredList(It.IsAny<WebinarParameters>(), It.IsAny<PaginationFilter>()))
-                .ReturnsAsync(new PagedList<Webinar>(TestWebinars, TestWebinars.Count, paginationFilter.PageNumber,
+                .ReturnsAsync(new PagedList<Webinar>(
+                    this.TestWebinars,
+                    this.TestWebinars.Count,
+                    paginationFilter.PageNumber,
                     paginationFilter.PageSize));
-            var webinarController = new WebinarController(MockMapper, mock.Object);
+            var webinarController = new WebinarController(this.MockMapper, mock.Object);
 
             var result = await webinarController.GetWebinarList(new WebinarFilter(), paginationFilter);
 
             var okObjectResult = result.Result.ShouldBeOfType<OkObjectResult>();
             var model = okObjectResult.Value.ShouldBeAssignableTo<Response<PagedList<WebinarDto>>>();
-            model.ShouldSatisfyAllConditions
-            (
+            model.ShouldSatisfyAllConditions(
                 () => model.StatusCode.ShouldBe(HttpStatusCode.OK),
                 () => model.Message.ShouldContain("Success"),
                 () => model.Data.CurrentPage.ShouldBe(paginationFilter.PageNumber),
                 () => model.Data.PageSize.ShouldBe(paginationFilter.PageSize),
-                () => model.Data.TotalCount.ShouldBe(TestWebinars.Count),
+                () => model.Data.TotalCount.ShouldBe(this.TestWebinars.Count),
                 () => model.Data.TotalPages.ShouldBe(1),
                 () => model.Data.HasNext.ShouldBeFalse(),
                 () => model.Data.HasPrevious.ShouldBeFalse(),
-                () => model.Data.Items.Count.ShouldBe(TestWebinars.Count)
-            );
+                () => model.Data.Items.Count.ShouldBe(this.TestWebinars.Count));
         }
 
+        /// <summary>
+        /// Check get webinar list with params.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Test]
         public async Task GetWebinarList_WithParams_ReturnsOkResult()
         {
@@ -63,22 +75,27 @@ namespace ParagonTestApplication.UnitTests.WebinarControllerTests
             var mock = new Mock<IAllWebinars>();
             mock
                 .Setup(x => x.GetFilteredList(It.IsAny<WebinarParameters>(), It.IsAny<PaginationFilter>()))
-                .ReturnsAsync(new PagedList<Webinar>(TestWebinars, TestWebinars.Count, paginationFilter.PageNumber,
+                .ReturnsAsync(new PagedList<Webinar>(
+                    this.TestWebinars,
+                    this.TestWebinars.Count,
+                    paginationFilter.PageNumber,
                     paginationFilter.PageSize));
-            var webinarController = new WebinarController(MockMapper, mock.Object);
+            var webinarController = new WebinarController(this.MockMapper, mock.Object);
 
             var result = await webinarController.GetWebinarList(webinarFilter, paginationFilter);
 
             var okObjectResult = result.Result.ShouldBeOfType<OkObjectResult>();
             var model = okObjectResult.Value.ShouldBeAssignableTo<Response<PagedList<WebinarDto>>>();
-            model.ShouldSatisfyAllConditions
-            (
+            model.ShouldSatisfyAllConditions(
                 () => model.StatusCode.ShouldBe(HttpStatusCode.OK),
                 () => model.Data.ShouldNotBeNull(),
-                () => model.Message.ShouldContain("Success")
-            );
+                () => model.Message.ShouldContain("Success"));
         }
 
+        /// <summary>
+        /// Check get webinar list with invalid params.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Test]
         public async Task GetWebinarList_WithInvalidParams_ReturnsBadRequestResult()
         {
@@ -96,14 +113,13 @@ namespace ParagonTestApplication.UnitTests.WebinarControllerTests
                 SeriesId = "twelve"
             };
             var mock = new Mock<IAllWebinars>();
-            var webinarController = new WebinarController(MockMapper, mock.Object);
+            var webinarController = new WebinarController(this.MockMapper, mock.Object);
 
             var result = await webinarController.GetWebinarList(webinarFilter, paginationFilter);
 
             var badRequestObjectResult = result.Result.ShouldBeOfType<BadRequestObjectResult>();
             var model = badRequestObjectResult.Value.ShouldBeAssignableTo<Response<PagedList<WebinarDto>>>();
-            model.ShouldSatisfyAllConditions
-            (
+            model.ShouldSatisfyAllConditions(
                 () => model.StatusCode.ShouldBe(HttpStatusCode.BadRequest),
                 () => model.Data.ShouldBeNull(),
                 () => model.Message.ShouldContain("PageNumber must be less than 12147483647"),
@@ -112,8 +128,7 @@ namespace ParagonTestApplication.UnitTests.WebinarControllerTests
                 () => model.Message.ShouldContain("MaxDateTime must be in format 2010-01-11T11:41"),
                 () => model.Message.ShouldContain("MinDuration must be a positive valid integer"),
                 () => model.Message.ShouldContain("MaxDuration must be a positive valid integer"),
-                () => model.Message.ShouldContain("SeriesId must be a positive valid integer")
-            );
+                () => model.Message.ShouldContain("SeriesId must be a positive valid integer"));
         }
     }
 }

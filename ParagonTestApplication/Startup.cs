@@ -1,39 +1,48 @@
-using System;
-using System.IO;
-using System.Reflection;
-using AutoMapper;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using ParagonTestApplication.Data;
-using ParagonTestApplication.Data.Contracts;
-using ParagonTestApplication.Data.Repositories;
-
 namespace ParagonTestApplication
 {
+    using System;
+    using System.IO;
+    using System.Reflection;
+    using AutoMapper;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.OpenApi.Models;
+    using ParagonTestApplication.Data;
+    using ParagonTestApplication.Data.Contracts;
+    using ParagonTestApplication.Data.Repositories;
+
+    /// <summary>
+    /// Startup class.
+    /// </summary>
     public class Startup
     {
-        private readonly IConfigurationRoot _configuration;
+        private readonly IConfigurationRoot configuration;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="hostEnv">Environment.</param>
         public Startup(IHostEnvironment hostEnv)
         {
-            _configuration = new ConfigurationBuilder()
+            this.configuration = new ConfigurationBuilder()
                 .SetBasePath(hostEnv.ContentRootPath)
                 .AddJsonFile("appsettings.json")
                 .Build();
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">Services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            //services
             services.AddDbContext<MainDbContext>(options =>
-                options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(this.configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IAllWebinars, WebinarRepository>();
             services.AddTransient<IAllSeries, SeriesRepository>();
@@ -42,7 +51,7 @@ namespace ParagonTestApplication
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Paragon test application", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Paragon test application", Version = "v1" });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -53,12 +62,23 @@ namespace ParagonTestApplication
         }
 
         // ReSharper disable once UnusedMember.Global
+
+        /// <summary>
+        /// Configure.
+        /// </summary>
+        /// <param name="app">Application builder.</param>
+        /// <param name="env">Environment.</param>
+        /// <param name="loggerFactory">Logger factory.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
+            }
             else
+            {
                 app.UseExceptionHandler("/api/error");
+            }
 
             app.UseHttpsRedirection();
 
