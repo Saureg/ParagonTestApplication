@@ -22,4 +22,4 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: UnitTest
-      run: dotnet test ./ParagonTestApplication.UnitTests/ParagonTestApplication.UnitTests.csproj --no-restore --no-build --verbosity normal 
+      run: dotnet test ./ParagonTestApplication.UnitTests/ParagonTestApplication.UnitTests.csproj --no-restore --verbosity normal 
