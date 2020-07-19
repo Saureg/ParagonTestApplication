@@ -73,8 +73,8 @@ namespace ParagonTestApplication.PerformanceTests.Scenarios
                     "get_webinar_list_with_filters_scenario",
                     webinarSteps.GetWebinarList(new WebinarFilter
                     {
-                        MaxDuration = "10",
-                        MinDuration = "240",
+                        MaxDuration = "240",
+                        MinDuration = "10",
                         MaxDateTime = "2020-12-01T09:00",
                         MinDateTime = "2020-01-01T09:00"
                     }),
@@ -95,11 +95,16 @@ namespace ParagonTestApplication.PerformanceTests.Scenarios
             var scenario = ScenarioBuilder
                 .CreateScenario(
                     "get_webinar_large_list_scenario",
-                    webinarSteps.GetWebinarList(paginationFilter: new PaginationFilter
-                    {
-                        PageNumber = 1,
-                        PageSize = 10000
-                    }),
+                    webinarSteps.GetWebinarList(
+                        new WebinarFilter
+                        {
+                            MinDuration = "200"
+                        },
+                        new PaginationFilter
+                        {
+                            PageNumber = 1,
+                            PageSize = 1000
+                        }),
                     CommonSteps.Pause(injectionRate.Pause)
                 )
                 .WithWarmUpDuration(TimeSpan.FromMinutes(2))
