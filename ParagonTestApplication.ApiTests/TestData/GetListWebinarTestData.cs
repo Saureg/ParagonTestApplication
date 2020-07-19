@@ -1,12 +1,19 @@
-﻿using System.Collections.Generic;
-using ParagonTestApplication.ApiTests.Models.TestDataModels.Webinars;
-using ParagonTestApplication.Models.ApiModels.Webinars;
-using ParagonTestApplication.Models.Common;
-
-namespace ParagonTestApplication.ApiTests.TestData
+﻿namespace ParagonTestApplication.ApiTests.TestData
 {
+    using System.Collections.Generic;
+    using ParagonTestApplication.ApiTests.Models.TestDataModels.Webinars;
+    using ParagonTestApplication.Models.ApiModels.Webinars;
+    using ParagonTestApplication.Models.Common;
+
+    /// <summary>
+    /// Test data for get list tests.
+    /// </summary>
     public class GetListWebinarTestData
     {
+        /// <summary>
+        /// Generate validation test data list.
+        /// </summary>
+        /// <returns>Test data list.</returns>
         public static List<GetListTestDataModel> GenerateValidationTestDataList()
         {
             var list = new List<GetListTestDataModel>
@@ -14,10 +21,7 @@ namespace ParagonTestApplication.ApiTests.TestData
                 new GetListTestDataModel
                 {
                     TestDescription = "WithInvalidPageNumber",
-                    PaginationFilter = new PaginationFilter
-                    {
-                        PageNumber = 0
-                    },
+                    PaginationFilter = new PaginationFilter { PageNumber = 0 },
                     ExpectedValidationMessage = "PageNumber must be equal or greater than 1"
                 },
                 new GetListTestDataModel

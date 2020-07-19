@@ -1,22 +1,29 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using NUnit.Framework;
-using ParagonTestApplication.Controllers;
-using ParagonTestApplication.Data.Contracts;
-using ParagonTestApplication.Models.ApiModels.Common;
-using ParagonTestApplication.Models.ApiModels.Series;
-using ParagonTestApplication.Models.ApiModels.Webinars;
-using ParagonTestApplication.Models.DataModels;
-using Shouldly;
-
-namespace ParagonTestApplication.UnitTests.WebinarControllerTests
+﻿namespace ParagonTestApplication.UnitTests.WebinarControllerTests
 {
+    using System;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Moq;
+    using NUnit.Framework;
+    using ParagonTestApplication.Controllers;
+    using ParagonTestApplication.Data.Contracts;
+    using ParagonTestApplication.Models.ApiModels.Common;
+    using ParagonTestApplication.Models.ApiModels.Series;
+    using ParagonTestApplication.Models.ApiModels.Webinars;
+    using ParagonTestApplication.Models.DataModels;
+    using Shouldly;
+
+    /// <summary>
+    /// Create webinar tests.
+    /// </summary>
     public class CreateWebinarTests : WebinarControllerBaseTests
     {
+        /// <summary>
+        /// Create webinar with valid model test.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Test]
         public async Task CreateWebinar_WithValidModel_ReturnsCreatedResult()
         {
@@ -47,14 +54,13 @@ namespace ParagonTestApplication.UnitTests.WebinarControllerTests
             mock
                 .Setup(x => x.Create(It.IsAny<Webinar>(), createOrUpdateRequest.Series.Name))
                 .ReturnsAsync(webinarForCreate);
-            var webinarController = new WebinarController(MockMapper, mock.Object);
+            var webinarController = new WebinarController(this.MockMapper, mock.Object);
 
             var result = await webinarController.CreateWebinar(createOrUpdateRequest);
 
             var createdAtActionResult = result.Result.ShouldBeOfType<CreatedAtActionResult>();
             var model = createdAtActionResult.Value.ShouldBeAssignableTo<Response<WebinarDto>>();
-            model.ShouldSatisfyAllConditions
-            (
+            model.ShouldSatisfyAllConditions(
                 () => model.StatusCode.ShouldBe(HttpStatusCode.Created),
                 () => model.Message.ShouldBe("Success"),
                 () => model.Data.Id.ShouldBe(webinarForCreate.Id),
@@ -62,58 +68,61 @@ namespace ParagonTestApplication.UnitTests.WebinarControllerTests
                 () => model.Data.EndDateTime.ShouldBe(webinarForCreate.EndDateTime),
                 () => model.Data.Duration.ShouldBe(webinarForCreate.Duration),
                 () => model.Data.Series.Id.ShouldBe(webinarForCreate.Series.Id),
-                () => model.Data.Series.Name.ShouldBe(webinarForCreate.Series.Name)
-            );
+                () => model.Data.Series.Name.ShouldBe(webinarForCreate.Series.Name));
         }
 
+        /// <summary>
+        /// Create webinar with invalid model test.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Test]
         public async Task CreateWebinar_WithInvalidModel_ReturnsBadRequestResult()
         {
             var mock = new Mock<IAllWebinars>();
-            var webinarController = new WebinarController(MockMapper, mock.Object);
+            var webinarController = new WebinarController(this.MockMapper, mock.Object);
 
             var result = await webinarController.CreateWebinar(new CreateOrUpdateWebinarRequest());
 
             var badRequestObjectResult = result.Result.ShouldBeOfType<BadRequestObjectResult>();
             var model = badRequestObjectResult.Value.ShouldBeAssignableTo<Response<WebinarDto>>();
-            model.ShouldSatisfyAllConditions
-            (
+            model.ShouldSatisfyAllConditions(
                 () => model.StatusCode.ShouldBe(HttpStatusCode.BadRequest),
                 () => model.Data.ShouldBeNull(),
                 () => model.Message.ShouldContain("Name is required"),
                 () => model.Message.ShouldContain("Series is required"),
                 () => model.Message.ShouldContain("StartDateTime is required"),
-                () => model.Message.ShouldContain("Duration must be equal or greater than 1 minute")
-            );
+                () => model.Message.ShouldContain("Duration must be equal or greater than 1 minute"));
         }
 
+        /// <summary>
+        /// Create webinar with non unique webinar name test.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Test]
         public async Task CreateWebinar_WithNonUniqueWebinarName_ReturnsBadRequestResult()
         {
-            var testWebinarName = TestWebinars.First().Name;
+            var testWebinarName = this.TestWebinars.First().Name;
             var request = new CreateOrUpdateWebinarRequest
             {
                 Name = testWebinarName,
                 Duration = 1,
-                Series = new CreateOrUpdateSeriesRequest {Name = "123"},
+                Series = new CreateOrUpdateSeriesRequest { Name = "123" },
                 StartDateTime = "2020-09-01T12:00"
             };
             var mock = new Mock<IAllWebinars>();
             mock
                 .Setup(x => x.GetAll())
-                .ReturnsAsync(TestWebinars);
-            var webinarController = new WebinarController(MockMapper, mock.Object);
+                .ReturnsAsync(this.TestWebinars);
+            var webinarController = new WebinarController(this.MockMapper, mock.Object);
 
             var result = await webinarController.CreateWebinar(request);
 
             var badRequestObjectResult = result.Result.ShouldBeOfType<BadRequestObjectResult>();
             var model = badRequestObjectResult.Value.ShouldBeAssignableTo<Response<WebinarDto>>();
-            model.ShouldSatisfyAllConditions
-            (
+            model.ShouldSatisfyAllConditions(
                 () => model.StatusCode.ShouldBe(HttpStatusCode.BadRequest),
                 () => model.Data.ShouldBeNull(),
-                () => model.Message.ShouldContain("Name must be unique")
-            );
+                () => model.Message.ShouldContain("Name must be unique"));
         }
     }
 }

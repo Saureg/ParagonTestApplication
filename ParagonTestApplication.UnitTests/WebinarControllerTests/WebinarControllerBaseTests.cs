@@ -1,24 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
-using NUnit.Framework;
-using ParagonTestApplication.Mappings;
-using ParagonTestApplication.Models.DataModels;
-
-namespace ParagonTestApplication.UnitTests.WebinarControllerTests
+﻿namespace ParagonTestApplication.UnitTests.WebinarControllerTests
 {
+    using System;
+    using System.Collections.Generic;
+    using AutoMapper;
+    using NUnit.Framework;
+    using ParagonTestApplication.Mappings;
+    using ParagonTestApplication.Models.DataModels;
+
+    /// <summary>
+    /// Base class for webinar controller tests.
+    /// </summary>
     [Category("Unit.WebinarController")]
     public abstract class WebinarControllerBaseTests
     {
         protected readonly IMapper MockMapper;
         protected readonly List<Webinar> TestWebinars;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebinarControllerBaseTests"/> class.
+        /// </summary>
         protected WebinarControllerBaseTests()
         {
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile(new MapperProfile()); });
-            MockMapper = mapperConfiguration.CreateMapper();
+            this.MockMapper = mapperConfiguration.CreateMapper();
 
-            TestWebinars = new List<Webinar>
+            this.TestWebinars = new List<Webinar>
             {
                 new Webinar
                 {
@@ -45,7 +51,7 @@ namespace ParagonTestApplication.UnitTests.WebinarControllerTests
                     }
                 }
             };
-            TestWebinars.ForEach(x => x.CalculateEndDateTime());
+            this.TestWebinars.ForEach(x => x.CalculateEndDateTime());
         }
     }
 }

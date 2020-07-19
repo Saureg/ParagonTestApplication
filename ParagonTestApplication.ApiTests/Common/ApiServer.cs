@@ -1,14 +1,21 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
-
-namespace ParagonTestApplication.ApiTests.Common
+﻿namespace ParagonTestApplication.ApiTests.Common
 {
+    using System;
+    using System.IO;
+    using System.Net.Http;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.TestHost;
+    using Microsoft.Extensions.Configuration;
+
+    /// <summary>
+    /// Server for API tests.
+    /// </summary>
     public class ApiServer : IDisposable
     {
+        private static readonly object Lock = new object();
+
+        private static ApiServer apiServer;
+
         private ApiServer()
         {
             new ConfigurationBuilder()
@@ -16,40 +23,54 @@ namespace ParagonTestApplication.ApiTests.Common
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            Server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
-            Client = Server.CreateClient();
+            this.Server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
+            this.Client = this.Server.CreateClient();
         }
 
+        /// <summary>
+        /// Gets httpClient.
+        /// </summary>
         public HttpClient Client { get; private set; }
 
         private TestServer Server { get; set; }
 
-        private static ApiServer _apiServer;
-
-        private static readonly object Lock = new object();
-
+        /// <summary>
+        /// Get server instance.
+        /// </summary>
+        /// <returns>Server instance.</returns>
         public static ApiServer GetInstance()
         {
-            if (_apiServer != null) return _apiServer;
+            if (apiServer != null)
+            {
+                return apiServer;
+            }
+
             lock (Lock)
             {
-                _apiServer ??= new ApiServer();
+                apiServer ??= new ApiServer();
             }
 
-            return _apiServer;
+            return apiServer;
         }
 
+        /// <summary>
+        /// Dispose server.
+        /// </summary>
         public void Dispose()
         {
-            if (Client != null)
+            if (this.Client != null)
             {
-                Client.Dispose();
-                Client = null;
+                this.Client.Dispose();
+                this.Client = null;
             }
 
-            if (Server == null) return;
-            Server.Dispose();
-            Server = null;
+            if (this.Server == null)
+            {
+                return;
+            }
+
+            this.Server.Dispose();
+            this.Server = null;
         }
     }
 }
