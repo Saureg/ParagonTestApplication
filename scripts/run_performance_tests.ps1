@@ -1,0 +1,1 @@
+dotnet test ./../ParagonTestApplication.PerformanceTests/ParagonTestApplication.PerformanceTests.csproj
