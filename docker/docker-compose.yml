@@ -7,12 +7,12 @@ networks:
 services:
   postgres:
     container_name: 'postgres'
-    image: postgres:latest
+    image: postgres:12.3-alpine
     ports:
       - "5431:5432"
     restart: always
     volumes:
-      - ./scripts/db_script.sql :/docker-entrypoint-initdb.d/db_script.sql
+      - ./../scripts/db_script.sql :/docker-entrypoint-initdb.d/db_script.sql
     environment:
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password

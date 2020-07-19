@@ -18,6 +18,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParagonTestApplication.Perf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParagonTestApplication.ApiClient", "ParagonTestApplication.ApiClient\ParagonTestApplication.ApiClient.csproj", "{D3B0244C-A354-495F-9F43-A79908CCA007}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{27EE260F-3E96-43B3-8BD5-ED41F762159A}"
+ProjectSection(SolutionItems) = preProject
+	docker\.dockerignore = docker\.dockerignore
+	docker\docker-compose.yml = docker\docker-compose.yml
+	docker\Dockerfile = docker\Dockerfile
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
